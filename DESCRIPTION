@@ -1,0 +1,9 @@
+Package: drifter
+Title: Concept Drift and Concept Shift Detection for Predictive Models
+Version: 0.1
+Authors@R: person("First", "Last", email = "first.last@example.com", role = c("aut", "cre"))
+Description: What the package does (one paragraph).
+Depends: R (>= 3.5.0)
+License: GPL
+Encoding: UTF-8
+LazyData: true
