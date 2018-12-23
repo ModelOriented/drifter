@@ -57,9 +57,17 @@
     <div id="drifter-concept-drift-and-concept-shift-detection-for-predictive-models" class="section level1">
 <div class="page-header"><h1 class="hasAnchor">
 <a href="#drifter-concept-drift-and-concept-shift-detection-for-predictive-models" class="anchor"></a>drifter: Concept Drift and Concept Shift Detection for Predictive Models</h1></div>
+
 <p>Machine learning models are often fitted and validated on historical data under silent assumption that data are stationary. The most popular techniques for validation (k-fold cross-validation, repeated cross-validation, and so on) test models on data with the same distribution as training data.</p>
 <p>Yet, in many practical applications, deployed models are working in a changing environment. After some time, due to changes in the environment, model performance may degenerate, as model may be less reliable.</p>
 <p>Concept drift refers to the change in the data distribution or in the relationships between variables over time. Think about model for energy consumption for a school, over time the school may be equipped with larger number of devices of with more power-efficient devices that may affect the model performance.</p>
+<div id="installation" class="section level2">
+<h2 class="hasAnchor">
+<a href="#installation" class="anchor"></a>Installation</h2>
+<p>To get started, install the newest version from GitHub.</p>
+<pre><code><a href="http://www.rdocumentation.org/packages/devtools/topics/reexports">devtools::install_github("ModelOriented/drifter")</a></code></pre>
+<p>To get help, see examples and details of the methodology, please refer to package website and vignettes.</p>
+</div>
 <div id="implemented-tests" class="section level2">
 <h2 class="hasAnchor">
 <a href="#implemented-tests" class="anchor"></a>Implemented tests</h2>
@@ -97,7 +105,15 @@
 </ul>
 </div>
 
-  </div>
+  <div class="dev-status">
+<h2>Dev status</h2>
+<ul class="list-unstyled">
+<li><a href="https://cran.r-project.org/package=drifter"><img src="http://www.r-pkg.org/badges/version/drifter" alt="CRAN_Status_Badge"></a></li>
+<li><a href="https://travis-ci.org/ModelOriented/drifter"><img src="https://travis-ci.org/ModelOriented/drifter.svg?branch=master" alt="Travis-CI Build Status"></a></li>
+<li><a href="https://codecov.io/github/ModelOriented/drifter?branch=master"><img src="https://img.shields.io/codecov/c/github/ModelOriented/drifter/master.svg" alt="Coverage Status"></a></li>
+</ul>
+</div>
+</div>
 </div>
 
 

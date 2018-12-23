@@ -6,7 +6,7 @@ Description: Concept drift refers to the change in the data distribution or
     in the relationships between variables over time.
     'drifter' calculates distances between variable distributions or 
     variable relations. 
-    'drifter' is a part of 'DrWhy' universe for tools for Explanation, Exploration and Visualisation for Predictive Models.
+    'drifter' is a part of 'DrWhy' universe: tools for Explanation, Exploration and Visualisation for Predictive Models.
 Depends: R (>= 3.1)
 License: GPL
 Encoding: UTF-8
