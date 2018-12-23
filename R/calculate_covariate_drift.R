@@ -13,6 +13,10 @@
 #'
 #' @examples
 #' library("DALEX2")
+#' # here we do not have any drift
+#' d <- calculate_covariate_drift(apartments, apartments_test)
+#' d
+#' # here we do have drift
 #' d <- calculate_covariate_drift(dragons, dragons_test)
 #' d
 #'
@@ -54,6 +58,10 @@ calculate_covariate_drift <- function(data_old, data_new, bins = 20) {
 #'
 #' @examples
 #' library("DALEX2")
+#' # here we do not have any drift
+#' d <- calculate_covariate_drift(apartments, apartments_test)
+#' d
+#' # here we do have drift
 #' d <- calculate_covariate_drift(dragons, dragons_test)
 #' d
 #'

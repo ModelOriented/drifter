@@ -23,6 +23,10 @@ The larger the distance the more different are two distributions.
 }
 \examples{
 library("DALEX2")
+# here we do not have any drift
+d <- calculate_covariate_drift(apartments, apartments_test)
+d
+# here we do have drift
 d <- calculate_covariate_drift(dragons, dragons_test)
 d
 

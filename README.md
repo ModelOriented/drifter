@@ -6,4 +6,12 @@ Yet, in many practical applications, deployed models are working in a changing e
 
 Concept drift refers to the change in the data distribution or in the relationships between variables over time. Think about model for energy consumption for a school, over time the school may be equipped with larger number of devices of with more power-efficient devices that may affect the model performance.
 
+## Implemented tests
+
+* For two samples (training data and validation data) verification of unidimensional distributions $p(X_i)$
+* For two samples 
+
+
+
+
 

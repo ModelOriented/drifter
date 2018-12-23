@@ -4,12 +4,15 @@ Version: 0.1
 Authors@R: person("Przemyslaw", "Biecek", email = "przemyslaw.biecek@gmail.com", role = c("aut", "cre"))
 Description: Concept drift refers to the change in the data distribution or 
     in the relationships between variables over time.
-    `drifter` calculates distances between variable distributions or 
+    'drifter' calculates distances between variable distributions or 
     variable relations. 
-Depends: R (>= 3.5.0)
+    'drifter' is a part of 'DrWhy' universe for tools for Explanation, Exploration and Visualisation for Predictive Models.
+Depends: R (>= 3.1)
 License: GPL
 Encoding: UTF-8
 LazyData: true
 Imports: 
     DALEX2
 RoxygenNote: 6.1.1
+URL: https://ModelOriented.github.io/drifter/
+BugReports: https://github.com/ModelOriented/drifter/issues
