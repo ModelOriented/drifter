@@ -12,7 +12,10 @@ License: GPL
 Encoding: UTF-8
 LazyData: true
 Imports: 
-    DALEX2
+    DALEX2,
+    dplyr,
+    tidyr,
+    ceterisParibus2
 RoxygenNote: 6.1.1
 URL: https://ModelOriented.github.io/drifter/
 BugReports: https://github.com/ModelOriented/drifter/issues

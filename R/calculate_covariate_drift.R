@@ -50,7 +50,7 @@ calculate_covariate_drift <- function(data_old, data_new, bins = 20) {
 #' Print Covariate Drift Data Frame
 #'
 #' @param x an object of the class `covariate_drift`
-#' @param max_length length of the fist column, by default 25
+#' @param max_length length of the first column, by default 25
 #' @param ... other arguments, currently ignored
 #'
 #' @return this function prints a data frame with a nicer format
