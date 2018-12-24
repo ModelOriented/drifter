@@ -12,6 +12,8 @@ r_packages:
   - DALEX2
   - covr
 
+r_github_packages:
+  ModelOriented/ceterisParibus2
+
 after_success:
   - Rscript -e 'library(covr); codecov()'
-
