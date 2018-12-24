@@ -16,6 +16,8 @@ Imports:
     dplyr,
     tidyr,
     ceterisParibus2
+Suggests:
+    testthat
 RoxygenNote: 6.1.1
 URL: https://ModelOriented.github.io/drifter/
 BugReports: https://github.com/ModelOriented/drifter/issues

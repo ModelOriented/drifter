@@ -1,64 +1,128 @@
-#' Calculate Model Drift for new/old data sets and models
+#' Calculate Model Drift for comparison of models trained on new/old data
+#'
+#' This function calculates differences between PDP curves calculated for new/old models
 #'
 #' @param model_old model created on historical / `old`data
 #' @param model_new model created on current / `new`data
-#' @param data_old data frame with `old` data
-#' @param data_new data frame with `new` data
-#' @param predict_function unction that takes two arguments: model and new data and returns numeric vector with predictions, by default it's `predict`
+#' @param data_new data frame with current / `new` data
+#' @param predict_function function that takes two arguments: model and new data and returns numeric vector with predictions, by default it's `predict`
+#' @param y_new true values of target variable for current / `new` data
+#' @param max_obs if negative, them all observations are used for calculation of PDP, is positive, then only `max_obs` are used for calculation of PDP
+#' @param scale scale parameter for calculation of scaled drift
 #'
 #' @return an object of a class `model_drift` (data.frame) with distances calculated based on Partial Dependency Plots
 #' @importFrom dplyr filter group_by summarise
 #' @importFrom tidyr spread
+#' @importFrom stats predict sd
 #' @importFrom ceterisParibus2 individual_variable_profile
 #' @export
 #'
 #' @examples
-calculate_model_drift <- function(model_old, model_new = NULL,
-                                  data_old, data_new,
-                                  y_old, y_new,
-                                  predict_function = predict) {
-  data_old_small <- data_old[sample(1:nrow(data_old), 500),]
-  data_new_small <- data_new[sample(1:nrow(data_new), 500),]
+#'  library("DALEX2")
+#'  \dontrun{
+#'  library("ranger")
+#'  predict_function <- function(m,x,...) predict(m, x, ...)$predictions
+#'  model_old <- ranger(m2.price ~ ., data = apartments)
+#'  model_new <- ranger(m2.price ~ ., data = apartments_test)
+#'  calculate_model_drift(model_old, model_new,
+#'                   apartments_test,
+#'                   apartments_test$m2.price,
+#'                   max_obs = 500,
+#'                   predict_function = predict_function)
+#' }
+#'
+calculate_model_drift <- function(model_old, model_new,
+                                  data_new,
+                                  y_new,
+                                  predict_function = predict,
+                                  max_obs = -1,
+                                  scale = sd(y_new, na.rm = TRUE)) {
   #
-  # compare old model on old vs new data
+  # test of model structure
+  if (max_obs > 0) {
+    data_new_small <- data_new[sample(1:nrow(data_new), max_obs),]
+  } else {
+    data_new_small <- data_new
+  }
+
   prof_old <- individual_variable_profile(model_old,
-                                          data = data_old,
-                                          new_observation = data_old_small,
+                                          data = data_new,
+                                          new_observation = data_new_small,
                                           label = "model_old",
                                           predict_function = predict_function)
-  prof_new <- individual_variable_profile(model_old,
-                                          data = data_old,
+  prof_new <- individual_variable_profile(model_new,
+                                          data = data_new,
                                           new_observation = data_new_small,
                                           label = "model_new",
                                           predict_function = predict_function)
-
   # for all variables
   vars <- as.character(unique(prof_old$`_vname_`))
 
-  df <- compare_two_profiles(prof_old, prof_new, vars, scale = sd(y_old, na.rm = TRUE))
-  #
-  # compare old vs new model on new data
-  if (!is.null(model_new)) {
-    prof_old <- individual_variable_profile(model_old,
-                                            data = data_new,
-                                            new_observation = data_new_small,
-                                            label = "model_old",
-                                            predict_function = predict_function)
-    prof_new <- individual_variable_profile(model_new,
-                                            data = data_new,
-                                            new_observation = data_new_small,
-                                            label = "model_new",
-                                            predict_function = predict_function)
-    df_model <- compare_two_profiles(prof_old, prof_new, vars, scale = sd(y_new, na.rm = TRUE))
-    df <- cbind(df, df_model)
-  }
+  df <- compare_two_profiles(prof_old, prof_new, vars, scale = scale)
 
   class(df) <- c("model_drift", "data.frame")
   df
 }
 
 
+#' Calculate Residual Drift for old model and new vs. old data
+#'
+#' @param model_old model created on historical / `old` data
+#' @param data_old data frame with historical / `old` data
+#' @param data_new data frame with current / `new` data
+#' @param y_old true values of target variable for historical / `old` data
+#' @param y_new true values of target variable for current / `new` data
+#' @param predict_function function that takes two arguments: model and new data and returns numeric vector with predictions, by default it's `predict`
+#' @param bins continuous variables are discretized to `bins` intervals of equal sizes
+#'
+#' @return an object of a class `covariate_drift` (data.frame) with inverse intersections distances calculated for residuals
+#' @export
+#'
+#' @examples
+#'  library("DALEX2")
+#'  \dontrun{
+#'  library("ranger")
+#'  predict_function <- function(m,x,...) predict(m, x, ...)$predictions
+#'  model_old <- ranger(m2.price ~ ., data = apartments)
+#' calculate_residuals_drift(model_old,
+#'                        apartments, apartments_test,
+#'                        apartments$m2.price, apartments_test$m2.price,
+#'                        predict_function = predict_function)
+#' }
+#'
+calculate_residuals_drift <- function(model_old,
+                                  data_old, data_new,
+                                  y_old, y_new,
+                                  predict_function = predict,
+                                  bins = 20) {
+  #
+  # distance between residuals
+  residuals_old <- y_old - predict_function(model_old, data_old)
+  residuals_new <- y_new - predict_function(model_old, data_new)
+  residuals_distance <- calculate_distance(residuals_old, residuals_new, bins = bins)
+
+  df <- data.frame(variables = "Residuals",
+                   drift = residuals_distance)
+  class(df) <- c("covariate_drift", "data.frame")
+  df
+}
+
+
+#' Calculates distance between two Ceteris Paribus Profiles
+#'
+#' This function calculates square root from mean square difference between Ceteris Paribus Profiles
+#'
+#' @param cpprofile_old Ceteris Paribus Profile for historical / `old` model
+#' @param cpprofile_new Ceteris Paribus Profile for current / `new` model
+#' @param variables variables for which drift should be calculated
+#' @param scale scale parameter for calculation of scaled drift
+#'
+#' @return data frame with distances between Ceteris Paribus Profiles
+#' @export
 compare_two_profiles <- function(cpprofile_old, cpprofile_new, variables, scale = 1) {
+  # clean check()
+  `_label_` <- `_vname_` <- `_yhat_` <- avg <- x <- NULL
+
   distances <- numeric(length(variables))
   for (i in seq_along(variables)) {
     var <- variables[i]

@@ -11,7 +11,7 @@ calculate_covariate_drift(data_old, data_new, bins = 20)
 
 \item{data_new}{data frame with `new` data}
 
-\item{bins}{continuous variables are discretized to `bins` intervals of equal size}
+\item{bins}{continuous variables are discretized to `bins` intervals of equal sizes}
 }
 \value{
 an object of a class `covariate_drift` (data.frame) with inverse intersections distances

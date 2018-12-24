@@ -6,7 +6,7 @@
 #'
 #' @param data_old data frame with `old` data
 #' @param data_new data frame with `new` data
-#' @param bins continuous variables are discretized to `bins` intervals of equal size
+#' @param bins continuous variables are discretized to `bins` intervals of equal sizes
 #'
 #' @return an object of a class `covariate_drift` (data.frame) with inverse intersections distances
 #' @export
@@ -29,22 +29,33 @@ calculate_covariate_drift <- function(data_old, data_new, bins = 20) {
   names(distances) <- joint_var
 
   for (i in seq_along(joint_var)) {
-    if (class(data_old[,i]) == "factor") {
-      after_cuts <- c(data_old[,i], data_new[,i])
-      after_cuts_table <- table(after_cuts, c(rep(1, nrow(data_old)), rep(2, nrow(data_new))))
-    } else {
-      after_cuts <- cut(rank(c(data_old[,i], data_new[,i])), bins)
-      after_cuts_table <- table(after_cuts, c(rep(1, nrow(data_old)), rep(2, nrow(data_new))))
-    }
-
-    mat <- matrix(c(prop.table(after_cuts_table,2)), nrow = 2, byrow = TRUE)
-    distances[i] <- 1 - sum(apply(mat, 2, min))
+    distances[i] <- calculate_distance(data_old[,i], data_new[,i], bins = bins)
   }
 
   df <- data.frame(variables = names(distances),
                    drift = distances)
   class(df) <- c("covariate_drift", "data.frame")
   df
+}
+
+#' Calculate Inverse Intersection Distance
+#'
+#' @param variable_old variable from `old` data
+#' @param variable_new variable from `new` data
+#' @param bins continuous variables are discretized to `bins` intervals of equal size
+#'
+#' @return inverse intersection distance
+#' @export
+calculate_distance <- function(variable_old, variable_new, bins = 20) {
+  if ("factor" %in% class(variable_old)) {
+    after_cuts <- c(variable_old, variable_new)
+  } else {
+    after_cuts <- cut(rank(c(variable_old, variable_new)), bins)
+  }
+
+  after_cuts_table <- table(after_cuts, c(rep(1, length(variable_old)), rep(2, length(variable_new))))
+  mat <- matrix(c(prop.table(after_cuts_table,2)), nrow = 2, byrow = TRUE)
+  1 - sum(apply(mat, 2, min))
 }
 
 #' Print Covariate Drift Data Frame

@@ -9,7 +9,7 @@
 \arguments{
 \item{x}{an object of the class `covariate_drift`}
 
-\item{max_length}{length of the fist column, by default 25}
+\item{max_length}{length of the first column, by default 25}
 
 \item{...}{other arguments, currently ignored}
 }
