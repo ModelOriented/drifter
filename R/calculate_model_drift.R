@@ -27,7 +27,18 @@
 #'  calculate_model_drift(model_old, model_new,
 #'                   apartments_test,
 #'                   apartments_test$m2.price,
-#'                   max_obs = 500,
+#'                   max_obs = 1000,
+#'                   predict_function = predict_function)
+#'
+#'  predict_function <- function(m,x,...) predict(m, x, ..., probability=TRUE)$predictions[,1]
+#'  data_old = HR[HR$gender == "male", -1]
+#'  data_new = HR[HR$gender == "female", -1]
+#'  model_old <- ranger(status ~ ., data = data_old, probability=TRUE)
+#'  model_new <- ranger(status ~ ., data = data_new, probability=TRUE)
+#'  calculate_model_drift(model_old, model_new,
+#'                   HR_test,
+#'                   HR_test$status == "fired",
+#'                   max_obs = 1000,
 #'                   predict_function = predict_function)
 #' }
 #'
@@ -84,7 +95,11 @@ calculate_model_drift <- function(model_old, model_new,
 #'  library("ranger")
 #'  predict_function <- function(m,x,...) predict(m, x, ...)$predictions
 #'  model_old <- ranger(m2.price ~ ., data = apartments)
-#' calculate_residuals_drift(model_old,
+#'  calculate_residuals_drift(model_old,
+#'                        apartments_test[1:4000,], apartments_test[4001:8000,],
+#'                        apartments_test$m2.price[1:4000], apartments_test$m2.price[4001:8000],
+#'                        predict_function = predict_function)
+#'  calculate_residuals_drift(model_old,
 #'                        apartments, apartments_test,
 #'                        apartments$m2.price, apartments_test$m2.price,
 #'                        predict_function = predict_function)
@@ -143,5 +158,61 @@ compare_two_profiles <- function(cpprofile_old, cpprofile_new, variables, scale 
                    drift = distances,
                    drift_scaled = distances/scale)
   df
+}
+
+
+#' Print Model Drift Data Frame
+#'
+#' @param x an object of the class `model_drift`
+#' @param max_length length of the first column, by default 25
+#' @param ... other arguments, currently ignored
+#'
+#' @return this function prints a data frame with a nicer format
+#' @export
+#'
+#' @examples
+#'  library("DALEX2")
+#'  \dontrun{
+#'  library("ranger")
+#'  predict_function <- function(m,x,...) predict(m, x, ...)$predictions
+#'  model_old <- ranger(m2.price ~ ., data = apartments)
+#'  model_new <- ranger(m2.price ~ ., data = apartments_test)
+#'  calculate_model_drift(model_old, model_new,
+#'                   apartments_test,
+#'                   apartments_test$m2.price,
+#'                   max_obs = 1000,
+#'                   predict_function = predict_function)
+#'
+#'  predict_function <- function(m,x,...) predict(m, x, ..., probability=TRUE)$predictions[,1]
+#'  data_old = HR[HR$gender == "male", -1]
+#'  data_new = HR[HR$gender == "female", -1]
+#'  model_old <- ranger(status ~ ., data = data_old, probability=TRUE)
+#'  model_new <- ranger(status ~ ., data = data_new, probability=TRUE)
+#'  calculate_model_drift(model_old, model_new,
+#'                   HR_test,
+#'                   HR_test$status == "fired",
+#'                   max_obs = 1000,
+#'                   predict_function = predict_function)
+#' }
+#'
+print.model_drift <- function(x, max_length = 25, ...) {
+  ntmp <- as.character(x$variables)
+  numr <- sprintf("%3.2f", x$drift)
+  numr2 <- paste0(substr(rep("     ", length(numr)), 1, 6 - nchar(numr)), numr)
+  nums <- sprintf("%3.1f", round(100*x$drift_scaled,1))
+  nums2 <- paste0(substr(rep("     ", length(nums)), 1, 6 - nchar(nums)), nums)
+  nams <- sapply(ntmp, function(j) paste0(substr("                    ", 1,
+                                                 pmax(max_length - nchar(j), 0)),
+                                          substr(j, 1, max_length),
+                                          " "))
+  stars <- paste0(ifelse((x$drift_scaled > 0.1) & (x$drift_scaled < 0.2), ".", ""),
+                  ifelse(x$drift_scaled > 0.2, "*", ""),
+                  ifelse(x$drift_scaled > 0.3, "*", ""),
+                  ifelse(x$drift_scaled > 0.4, "*", ""))
+
+  cat("                  Variable    Shift  Scaled\n")
+  cat("  -----------------------------------------------\n")
+  cat("",paste0(nams, "  ", numr2, "  ", nums2, "  ", stars,"\n"))
+  return(invisible(x))
 }
 

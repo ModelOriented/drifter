@@ -34,7 +34,11 @@ Calculate Residual Drift for old model and new vs. old data
  library("ranger")
  predict_function <- function(m,x,...) predict(m, x, ...)$predictions
  model_old <- ranger(m2.price ~ ., data = apartments)
-calculate_residuals_drift(model_old,
+ calculate_residuals_drift(model_old,
+                       apartments_test[1:4000,], apartments_test[4001:8000,],
+                       apartments_test$m2.price[1:4000], apartments_test$m2.price[4001:8000],
+                       predict_function = predict_function)
+ calculate_residuals_drift(model_old,
                        apartments, apartments_test,
                        apartments$m2.price, apartments_test$m2.price,
                        predict_function = predict_function)

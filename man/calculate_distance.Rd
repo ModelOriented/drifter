@@ -19,3 +19,7 @@ inverse intersection distance
 \description{
 Calculate Inverse Intersection Distance
 }
+\examples{
+calculate_distance(rnorm(1000), rnorm(1000))
+calculate_distance(rnorm(1000), runif(1000))
+}
