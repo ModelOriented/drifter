@@ -17,7 +17,8 @@ Imports:
     tidyr,
     ceterisParibus2
 Suggests:
-    testthat
+    testthat,
+    ranger
 RoxygenNote: 6.1.1
 URL: https://ModelOriented.github.io/drifter/
 BugReports: https://github.com/ModelOriented/drifter/issues
