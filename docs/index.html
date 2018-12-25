@@ -68,12 +68,16 @@
 <pre><code><a href="http://www.rdocumentation.org/packages/devtools/topics/reexports">devtools::install_github("ModelOriented/drifter")</a></code></pre>
 <p>To get help, see examples and details of the methodology, please refer to package website and vignettes.</p>
 </div>
-<div id="implemented-tests" class="section level2">
+<div id="implemented-checks" class="section level2">
 <h2 class="hasAnchor">
-<a href="#implemented-tests" class="anchor"></a>Implemented tests</h2>
+<a href="#implemented-checks" class="anchor"></a>Implemented checks</h2>
 <ul>
-<li>For two samples (training data and validation data) verification of unidimensional distributions $p(X_i)$</li>
-<li>For two samples</li>
+<li>
+<a href="https://modeloriented.github.io/drifter/reference/calculate_covariate_drift.html">calculate_covariate_drift</a> checks equality of unidimensional distributions $p(X_i)$ for two datasets (old vs new)</li>
+<li>
+<a href="https://modeloriented.github.io/drifter/reference/calculate_residuals_drift.html">calculate_residuals_drift</a> checks equality residual distributions $p(X_i)$ for two models (old vs new)</li>
+<li>
+<a href="https://modeloriented.github.io/drifter/reference/calculate_model_drift.html">calculate_model_drift</a> checks equality of PDP profiles for two models (old vs new)</li>
 </ul>
 </div>
 </div>

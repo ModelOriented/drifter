@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Calculate Covariate Drift for two data frames — calculate_covariate_drift • drifter</title>
+<title>Calculates distance between two Ceteris Paribus Profiles — compare_two_profiles • drifter</title>
 
 <!-- jquery -->
 <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script>
@@ -48,7 +48,7 @@
 	  <a class = "navbar-mi2logo" href="http://mi2.mini.pw.edu.pl/">
         <img src = "https://github.com/mi2-warsaw/MI2template/blob/master/inst/pkgdown/assets/MI2logo.jpg?raw=true" alt = "MI2" height = 46 title = "MI2">
 	  </a>
-      <a class="navbar-brand navbar-mi2" href="../index.html">Calculate Covariate Drift for two data frames</a>
+      <a class="navbar-brand navbar-mi2" href="../index.html">Calculates distance between two Ceteris Paribus Profiles</a>
     </div>
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="navbar-mi2 nav navbar-nav">
@@ -79,63 +79,41 @@
       <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Calculate Covariate Drift for two data frames</h1>
+    <h1>Calculates distance between two Ceteris Paribus Profiles</h1>
     </div>
 
     
-    <p>Here covariate drift is defined as Non-Intersection distance between two distributions.
-More formally, $$d(P,Q) = 1 - sum_i min(P_i, Q_i)$$.
-The larger the distance the more different are two distributions.</p>
+    <p>This function calculates square root from mean square difference between Ceteris Paribus Profiles</p>
     
 
-    <pre class="usage"><span class='fu'>calculate_covariate_drift</span>(<span class='no'>data_old</span>, <span class='no'>data_new</span>, <span class='kw'>bins</span> <span class='kw'>=</span> <span class='fl'>20</span>)</pre>
+    <pre class="usage"><span class='fu'>compare_two_profiles</span>(<span class='no'>cpprofile_old</span>, <span class='no'>cpprofile_new</span>, <span class='no'>variables</span>, <span class='kw'>scale</span> <span class='kw'>=</span> <span class='fl'>1</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>data_old</th>
-      <td><p>data frame with `old` data</p></td>
+      <th>cpprofile_old</th>
+      <td><p>Ceteris Paribus Profile for historical / `old` model</p></td>
     </tr>
     <tr>
-      <th>data_new</th>
-      <td><p>data frame with `new` data</p></td>
+      <th>cpprofile_new</th>
+      <td><p>Ceteris Paribus Profile for current / `new` model</p></td>
     </tr>
     <tr>
-      <th>bins</th>
-      <td><p>continuous variables are discretized to `bins` intervals of equal sizes</p></td>
+      <th>variables</th>
+      <td><p>variables for which drift should be calculated</p></td>
+    </tr>
+    <tr>
+      <th>scale</th>
+      <td><p>scale parameter for calculation of scaled drift</p></td>
     </tr>
     </table>
     
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>an object of a class `covariate_drift` (data.frame) with inverse intersections distances</p>
+    <p>data frame with distances between Ceteris Paribus Profiles</p>
     
 
-    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'>library</span>(<span class='st'>"DALEX2"</span>)
-<span class='co'># here we do not have any drift</span>
-<span class='no'>d</span> <span class='kw'>&lt;-</span> <span class='fu'>calculate_covariate_drift</span>(<span class='no'>apartments</span>, <span class='no'>apartments_test</span>)
-<span class='no'>d</span></div><div class='output co'>#&gt;                   Variable  Shift
-#&gt;   -------------------------------------
-#&gt;                   m2.price    4.9  
-#&gt;          construction.year    6.0  
-#&gt;                    surface    6.8  
-#&gt;                      floor    4.9  
-#&gt;                   no.rooms    2.8  
-#&gt;                   district    2.8  </div><div class='input'><span class='co'># here we do have drift</span>
-<span class='no'>d</span> <span class='kw'>&lt;-</span> <span class='fu'>calculate_covariate_drift</span>(<span class='no'>dragons</span>, <span class='no'>dragons_test</span>)
-<span class='no'>d</span></div><div class='output co'>#&gt;                   Variable  Shift
-#&gt;   -------------------------------------
-#&gt;              year_of_birth    8.9  
-#&gt;                     height   15.3  .
-#&gt;                     weight   14.7  .
-#&gt;                      scars    4.6  
-#&gt;                     colour   17.9  .
-#&gt;          year_of_discovery   97.5  ***
-#&gt;       number_of_lost_teeth    6.3  
-#&gt;                life_length    8.6  </div><div class='input'>
-</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
@@ -143,9 +121,7 @@ The larger the distance the more different are two distributions.</p>
       <li><a href="#arguments">Arguments</a></li>
       
       <li><a href="#value">Value</a></li>
-      
-      <li><a href="#examples">Examples</a></li>
-    </ul>
+          </ul>
 
   </div>
 </div>

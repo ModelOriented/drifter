@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Calculate Covariate Drift for two data frames — calculate_covariate_drift • drifter</title>
+<title>Calculate Residual Drift for old model and new vs. old data — calculate_residuals_drift • drifter</title>
 
 <!-- jquery -->
 <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script>
@@ -48,7 +48,7 @@
 	  <a class = "navbar-mi2logo" href="http://mi2.mini.pw.edu.pl/">
         <img src = "https://github.com/mi2-warsaw/MI2template/blob/master/inst/pkgdown/assets/MI2logo.jpg?raw=true" alt = "MI2" height = 46 title = "MI2">
 	  </a>
-      <a class="navbar-brand navbar-mi2" href="../index.html">Calculate Covariate Drift for two data frames</a>
+      <a class="navbar-brand navbar-mi2" href="../index.html">Calculate Residual Drift for old model and new vs. old data</a>
     </div>
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="navbar-mi2 nav navbar-nav">
@@ -79,27 +79,42 @@
       <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Calculate Covariate Drift for two data frames</h1>
+    <h1>Calculate Residual Drift for old model and new vs. old data</h1>
     </div>
 
     
-    <p>Here covariate drift is defined as Non-Intersection distance between two distributions.
-More formally, $$d(P,Q) = 1 - sum_i min(P_i, Q_i)$$.
-The larger the distance the more different are two distributions.</p>
+    <p>Calculate Residual Drift for old model and new vs. old data</p>
     
 
-    <pre class="usage"><span class='fu'>calculate_covariate_drift</span>(<span class='no'>data_old</span>, <span class='no'>data_new</span>, <span class='kw'>bins</span> <span class='kw'>=</span> <span class='fl'>20</span>)</pre>
+    <pre class="usage"><span class='fu'>calculate_residuals_drift</span>(<span class='no'>model_old</span>, <span class='no'>data_old</span>, <span class='no'>data_new</span>, <span class='no'>y_old</span>, <span class='no'>y_new</span>,
+  <span class='kw'>predict_function</span> <span class='kw'>=</span> <span class='no'>predict</span>, <span class='kw'>bins</span> <span class='kw'>=</span> <span class='fl'>20</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
+      <th>model_old</th>
+      <td><p>model created on historical / `old` data</p></td>
+    </tr>
+    <tr>
       <th>data_old</th>
-      <td><p>data frame with `old` data</p></td>
+      <td><p>data frame with historical / `old` data</p></td>
     </tr>
     <tr>
       <th>data_new</th>
-      <td><p>data frame with `new` data</p></td>
+      <td><p>data frame with current / `new` data</p></td>
+    </tr>
+    <tr>
+      <th>y_old</th>
+      <td><p>true values of target variable for historical / `old` data</p></td>
+    </tr>
+    <tr>
+      <th>y_new</th>
+      <td><p>true values of target variable for current / `new` data</p></td>
+    </tr>
+    <tr>
+      <th>predict_function</th>
+      <td><p>function that takes two arguments: model and new data and returns numeric vector with predictions, by default it's `predict`</p></td>
     </tr>
     <tr>
       <th>bins</th>
@@ -109,32 +124,24 @@ The larger the distance the more different are two distributions.</p>
     
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>an object of a class `covariate_drift` (data.frame) with inverse intersections distances</p>
+    <p>an object of a class `covariate_drift` (data.frame) with inverse intersections distances calculated for residuals</p>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'>library</span>(<span class='st'>"DALEX2"</span>)
-<span class='co'># here we do not have any drift</span>
-<span class='no'>d</span> <span class='kw'>&lt;-</span> <span class='fu'>calculate_covariate_drift</span>(<span class='no'>apartments</span>, <span class='no'>apartments_test</span>)
-<span class='no'>d</span></div><div class='output co'>#&gt;                   Variable  Shift
+    <pre class="examples"><div class='input'> <span class='fu'>library</span>(<span class='st'>"DALEX2"</span>)</div><div class='input'> <span class='fu'>library</span>(<span class='st'>"ranger"</span>)
+ <span class='no'>predict_function</span> <span class='kw'>&lt;-</span> <span class='kw'>function</span>(<span class='no'>m</span>,<span class='no'>x</span>,<span class='no'>...</span>) <span class='fu'>predict</span>(<span class='no'>m</span>, <span class='no'>x</span>, <span class='no'>...</span>)$<span class='no'>predictions</span>
+ <span class='no'>model_old</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='http://www.rdocumentation.org/packages/ranger/topics/ranger'>ranger</a></span>(<span class='no'>m2.price</span> ~ <span class='no'>.</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>apartments</span>)
+ <span class='fu'>calculate_residuals_drift</span>(<span class='no'>model_old</span>,
+                       <span class='no'>apartments_test</span>[<span class='fl'>1</span>:<span class='fl'>4000</span>,], <span class='no'>apartments_test</span>[<span class='fl'>4001</span>:<span class='fl'>8000</span>,],
+                       <span class='no'>apartments_test</span>$<span class='no'>m2.price</span>[<span class='fl'>1</span>:<span class='fl'>4000</span>], <span class='no'>apartments_test</span>$<span class='no'>m2.price</span>[<span class='fl'>4001</span>:<span class='fl'>8000</span>],
+                       <span class='kw'>predict_function</span> <span class='kw'>=</span> <span class='no'>predict_function</span>)</div><div class='output co'>#&gt;                   Variable  Shift
 #&gt;   -------------------------------------
-#&gt;                   m2.price    4.9  
-#&gt;          construction.year    6.0  
-#&gt;                    surface    6.8  
-#&gt;                      floor    4.9  
-#&gt;                   no.rooms    2.8  
-#&gt;                   district    2.8  </div><div class='input'><span class='co'># here we do have drift</span>
-<span class='no'>d</span> <span class='kw'>&lt;-</span> <span class='fu'>calculate_covariate_drift</span>(<span class='no'>dragons</span>, <span class='no'>dragons_test</span>)
-<span class='no'>d</span></div><div class='output co'>#&gt;                   Variable  Shift
+#&gt;                  Residuals    3.0  </div><div class='input'> <span class='fu'>calculate_residuals_drift</span>(<span class='no'>model_old</span>,
+                       <span class='no'>apartments</span>, <span class='no'>apartments_test</span>,
+                       <span class='no'>apartments</span>$<span class='no'>m2.price</span>, <span class='no'>apartments_test</span>$<span class='no'>m2.price</span>,
+                       <span class='kw'>predict_function</span> <span class='kw'>=</span> <span class='no'>predict_function</span>)</div><div class='output co'>#&gt;                   Variable  Shift
 #&gt;   -------------------------------------
-#&gt;              year_of_birth    8.9  
-#&gt;                     height   15.3  .
-#&gt;                     weight   14.7  .
-#&gt;                      scars    4.6  
-#&gt;                     colour   17.9  .
-#&gt;          year_of_discovery   97.5  ***
-#&gt;       number_of_lost_teeth    6.3  
-#&gt;                life_length    8.6  </div><div class='input'>
+#&gt;                  Residuals   34.1  **</div><div class='input'>
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">

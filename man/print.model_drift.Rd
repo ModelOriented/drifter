@@ -32,6 +32,9 @@ Print Model Drift Data Frame
                   max_obs = 1000,
                   predict_function = predict_function)
 
+ # here we compare model created on male data
+ # with model applied to female data
+ # there is interaction with age, and it is detected here
  predict_function <- function(m,x,...) predict(m, x, ..., probability=TRUE)$predictions[,1]
  data_old = HR[HR$gender == "male", -1]
  data_new = HR[HR$gender == "female", -1]

@@ -30,6 +30,9 @@
 #'                   max_obs = 1000,
 #'                   predict_function = predict_function)
 #'
+#'  # here we compare model created on male data
+#'  # with model applied to female data
+#'  # there is interaction with age, and it is detected here
 #'  predict_function <- function(m,x,...) predict(m, x, ..., probability=TRUE)$predictions[,1]
 #'  data_old = HR[HR$gender == "male", -1]
 #'  data_new = HR[HR$gender == "female", -1]
@@ -40,6 +43,22 @@
 #'                   HR_test$status == "fired",
 #'                   max_obs = 1000,
 #'                   predict_function = predict_function)
+#'
+#'  # plot it
+#'  library("ceterisParibus2")
+#'  prof_old <- individual_variable_profile(model_old,
+#'                                      data = data_new,
+#'                                      new_observation = data_new[1:1000,],
+#'                                      label = "model_old",
+#'                                      predict_function = predict_function)
+#'  prof_new <- individual_variable_profile(model_new,
+#'                                      data = data_new,
+#'                                      new_observation = data_new[1:1000,],
+#'                                      label = "model_new",
+#'                                      predict_function = predict_function)
+#'  plot(prof_old, prof_new,
+#'       selected_variables = "age", aggregate_profiles = mean,
+#'       show_observations = FALSE, color = "_label_")
 #' }
 #'
 calculate_model_drift <- function(model_old, model_new,
@@ -183,6 +202,9 @@ compare_two_profiles <- function(cpprofile_old, cpprofile_new, variables, scale 
 #'                   max_obs = 1000,
 #'                   predict_function = predict_function)
 #'
+#'  # here we compare model created on male data
+#'  # with model applied to female data
+#'  # there is interaction with age, and it is detected here
 #'  predict_function <- function(m,x,...) predict(m, x, ..., probability=TRUE)$predictions[,1]
 #'  data_old = HR[HR$gender == "male", -1]
 #'  data_new = HR[HR$gender == "female", -1]
