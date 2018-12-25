@@ -42,6 +42,23 @@ Print Model Drift Data Frame
                   HR_test$status == "fired",
                   max_obs = 1000,
                   predict_function = predict_function)
+
+ # plot it
+ library("ceterisParibus2")
+ prof_old <- individual_variable_profile(model_old,
+                                     data = data_new,
+                                     new_observation = data_new[1:1000,],
+                                     label = "model_old",
+                                     predict_function = predict_function)
+ prof_new <- individual_variable_profile(model_new,
+                                     data = data_new,
+                                     new_observation = data_new[1:1000,],
+                                     label = "model_new",
+                                     predict_function = predict_function)
+ plot(prof_old, prof_new,
+      selected_variables = "age", aggregate_profiles = mean,
+      show_observations = FALSE, color = "_label_")
+
 }
 
 }

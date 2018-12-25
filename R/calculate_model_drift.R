@@ -193,6 +193,23 @@ compare_two_profiles <- function(cpprofile_old, cpprofile_new, variables, scale 
 #'                   HR_test$status == "fired",
 #'                   max_obs = 1000,
 #'                   predict_function = predict_function)
+#'
+#'  # plot it
+#'  library("ceterisParibus2")
+#'  prof_old <- individual_variable_profile(model_old,
+#'                                      data = data_new,
+#'                                      new_observation = data_new[1:1000,],
+#'                                      label = "model_old",
+#'                                      predict_function = predict_function)
+#'  prof_new <- individual_variable_profile(model_new,
+#'                                      data = data_new,
+#'                                      new_observation = data_new[1:1000,],
+#'                                      label = "model_new",
+#'                                      predict_function = predict_function)
+#'  plot(prof_old, prof_new,
+#'       selected_variables = "age", aggregate_profiles = mean,
+#'       show_observations = FALSE, color = "_label_")
+#'
 #' }
 #'
 print.model_drift <- function(x, max_length = 25, ...) {
@@ -201,7 +218,7 @@ print.model_drift <- function(x, max_length = 25, ...) {
   numr2 <- paste0(substr(rep("     ", length(numr)), 1, 6 - nchar(numr)), numr)
   nums <- sprintf("%3.1f", round(100*x$drift_scaled,1))
   nums2 <- paste0(substr(rep("     ", length(nums)), 1, 6 - nchar(nums)), nums)
-  nams <- sapply(ntmp, function(j) paste0(substr("                    ", 1,
+  nams <- sapply(ntmp, function(j) paste0(substr("                          ", 1,
                                                  pmax(max_length - nchar(j), 0)),
                                           substr(j, 1, max_length),
                                           " "))
