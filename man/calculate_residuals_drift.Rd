@@ -23,7 +23,7 @@ calculate_residuals_drift(model_old, data_old, data_new, y_old, y_new,
 \item{bins}{continuous variables are discretized to `bins` intervals of equal sizes}
 }
 \value{
-an object of a class `covariate_drift` (data.frame) with inverse intersections distances calculated for residuals
+an object of a class `covariate_drift` (data.frame) with Non-Intersection Distances calculated for residuals
 }
 \description{
 Calculate Residual Drift for old model and new vs. old data

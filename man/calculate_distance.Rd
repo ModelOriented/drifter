@@ -2,7 +2,7 @@
 % Please edit documentation in R/calculate_covariate_drift.R
 \name{calculate_distance}
 \alias{calculate_distance}
-\title{Calculate Inverse Intersection Distance}
+\title{Calculate Non-Intersection Distance}
 \usage{
 calculate_distance(variable_old, variable_new, bins = 20)
 }
@@ -14,10 +14,10 @@ calculate_distance(variable_old, variable_new, bins = 20)
 \item{bins}{continuous variables are discretized to `bins` intervals of equal size}
 }
 \value{
-inverse intersection distance
+Non-Intersection Distance
 }
 \description{
-Calculate Inverse Intersection Distance
+Calculate Non-Intersection Distance
 }
 \examples{
 calculate_distance(rnorm(1000), rnorm(1000))

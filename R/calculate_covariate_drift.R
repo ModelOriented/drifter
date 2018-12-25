@@ -1,6 +1,6 @@
 #' Calculate Covariate Drift for two data frames
 #'
-#' Here covariate drift is defined as Non-Intersection distance between two distributions.
+#' Here covariate drift is defined as Non-Intersection Distance between two distributions.
 #' More formally, $$d(P,Q) = 1 - sum_i min(P_i, Q_i)$$.
 #' The larger the distance the more different are two distributions.
 #'
@@ -8,7 +8,7 @@
 #' @param data_new data frame with `new` data
 #' @param bins continuous variables are discretized to `bins` intervals of equal sizes
 #'
-#' @return an object of a class `covariate_drift` (data.frame) with inverse intersections distances
+#' @return an object of a class `covariate_drift` (data.frame) with Non-Intersection Distances
 #' @export
 #'
 #' @examples
@@ -38,13 +38,13 @@ calculate_covariate_drift <- function(data_old, data_new, bins = 20) {
   df
 }
 
-#' Calculate Inverse Intersection Distance
+#' Calculate Non-Intersection Distance
 #'
 #' @param variable_old variable from `old` data
 #' @param variable_new variable from `new` data
 #' @param bins continuous variables are discretized to `bins` intervals of equal size
 #'
-#' @return inverse intersection distance
+#' @return Non-Intersection Distance
 #' @export
 #' @examples
 #' calculate_distance(rnorm(1000), rnorm(1000))

@@ -14,10 +14,10 @@ calculate_covariate_drift(data_old, data_new, bins = 20)
 \item{bins}{continuous variables are discretized to `bins` intervals of equal sizes}
 }
 \value{
-an object of a class `covariate_drift` (data.frame) with inverse intersections distances
+an object of a class `covariate_drift` (data.frame) with Non-Intersection Distances
 }
 \description{
-Here covariate drift is defined as Non-Intersection distance between two distributions.
+Here covariate drift is defined as Non-Intersection Distance between two distributions.
 More formally, $$d(P,Q) = 1 - sum_i min(P_i, Q_i)$$.
 The larger the distance the more different are two distributions.
 }

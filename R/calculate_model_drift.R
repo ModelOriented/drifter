@@ -105,7 +105,7 @@ calculate_model_drift <- function(model_old, model_new,
 #' @param predict_function function that takes two arguments: model and new data and returns numeric vector with predictions, by default it's `predict`
 #' @param bins continuous variables are discretized to `bins` intervals of equal sizes
 #'
-#' @return an object of a class `covariate_drift` (data.frame) with inverse intersections distances calculated for residuals
+#' @return an object of a class `covariate_drift` (data.frame) with Non-Intersection Distances calculated for residuals
 #' @export
 #'
 #' @examples
