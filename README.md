@@ -26,5 +26,6 @@ To get help, see examples and details of the methodology, please refer to packag
 * [calculate_covariate_drift](https://modeloriented.github.io/drifter/reference/calculate_covariate_drift.html) checks equality of unidimensional distributions $p(X_i)$ for two datasets (old vs new)
 * [calculate_residuals_drift](https://modeloriented.github.io/drifter/reference/calculate_residuals_drift.html) checks equality residual distributions $p(X_i)$ for two models (old vs new)
 * [calculate_model_drift](https://modeloriented.github.io/drifter/reference/calculate_model_drift.html) checks equality of PDP profiles for two models (old vs new)
+* [check_drift](https://modeloriented.github.io/drifter/reference/check_drift.html) executes all checks against drift.
 
 

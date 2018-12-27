@@ -23,12 +23,12 @@
 #'  predict_function <- function(m,x,...) predict(m, x, ...)$predictions
 #'  model_old <- ranger(m2.price ~ ., data = apartments)
 #'  model_new <- ranger(m2.price ~ ., data = apartments_test)
-#'  run_drift_checks(model_old, model_new,
+#'  check_drift(model_old, model_new,
 #'                   apartments, apartments_test,
 #'                   apartments$m2.price, apartments_test$m2.price,
 #'                   predict_function = predict_function)
 #' }
-run_drift_checks <- function(model_old, model_new,
+check_drift <- function(model_old, model_new,
                              data_old, data_new,
                              y_old, y_new,
                              predict_function = predict,
