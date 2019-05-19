@@ -1,21 +1,21 @@
 Package: drifter
 Title: Concept Drift and Concept Shift Detection for Predictive Models
-Version: 0.1
+Version: 0.2
 Authors@R: person("Przemyslaw", "Biecek", email = "przemyslaw.biecek@gmail.com", role = c("aut", "cre"))
 Description: Concept drift refers to the change in the data distribution or 
-    in the relationships between variables over time.
-    'drifter' calculates distances between variable distributions or 
-    variable relations. 
-    'drifter' is a part of 'DrWhy' universe: tools for Explanation, Exploration and Visualisation for Predictive Models.
+  in the relationships between variables over time.
+  'drifter' calculates distances between variable distributions or 
+  variable relations and identifies both types of drift. 
+  'drifter' is a part of the 'DrWhy.AI' universe (Biecek 2018) <arXiv:1806.08915>.
 Depends: R (>= 3.1)
 License: GPL
 Encoding: UTF-8
 LazyData: true
 Imports: 
-    DALEX2,
+    DALEX,
     dplyr,
     tidyr,
-    ceterisParibus2
+    ingredients
 Suggests:
     testthat,
     ranger

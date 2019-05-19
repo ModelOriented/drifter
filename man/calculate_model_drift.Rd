@@ -5,8 +5,8 @@
 \title{Calculate Model Drift for comparison of models trained on new/old data}
 \usage{
 calculate_model_drift(model_old, model_new, data_new, y_new,
-  predict_function = predict, max_obs = -1, scale = sd(y_new, na.rm =
-  TRUE))
+  predict_function = predict, max_obs = 100, scale = sd(y_new, na.rm
+  = TRUE))
 }
 \arguments{
 \item{model_old}{model created on historical / `old`data}
@@ -30,8 +30,8 @@ an object of a class `model_drift` (data.frame) with distances calculated based 
 This function calculates differences between PDP curves calculated for new/old models
 }
 \examples{
- library("DALEX2")
- \dontrun{
+ library("DALEX")
+ \donttest{
  library("ranger")
  predict_function <- function(m,x,...) predict(m, x, ...)$predictions
  model_old <- ranger(m2.price ~ ., data = apartments)
@@ -39,7 +39,6 @@ This function calculates differences between PDP curves calculated for new/old m
  calculate_model_drift(model_old, model_new,
                   apartments_test,
                   apartments_test$m2.price,
-                  max_obs = 1000,
                   predict_function = predict_function)
 
  # here we compare model created on male data
@@ -53,24 +52,23 @@ This function calculates differences between PDP curves calculated for new/old m
  calculate_model_drift(model_old, model_new,
                   HR_test,
                   HR_test$status == "fired",
-                  max_obs = 1000,
                   predict_function = predict_function)
 
  # plot it
- library("ceterisParibus2")
- prof_old <- individual_variable_profile(model_old,
-                                     data = data_new,
-                                     new_observation = data_new[1:1000,],
+ library("ingredients")
+ prof_old <- partial_dependency(model_old,
+                                     data = data_new[1:500,],
                                      label = "model_old",
-                                     predict_function = predict_function)
- prof_new <- individual_variable_profile(model_new,
-                                     data = data_new,
-                                     new_observation = data_new[1:1000,],
+                                     predict_function = predict_function,
+                                     grid_points = 101,
+                                     variable_splits = NULL)
+ prof_new <- partial_dependency(model_new,
+                                     data = data_new[1:500,],
                                      label = "model_new",
-                                     predict_function = predict_function)
- plot(prof_old, prof_new,
-      selected_variables = "age", aggregate_profiles = mean,
-      show_observations = FALSE, color = "_label_")
+                                     predict_function = predict_function,
+                                     grid_points = 101,
+                                     variable_splits = NULL)
+ plot(prof_old, prof_new, color = "_label_")
 }
 
 }

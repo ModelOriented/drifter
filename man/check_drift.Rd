@@ -5,7 +5,7 @@
 \title{This function executes all tests for drift between two datasets / models}
 \usage{
 check_drift(model_old, model_new, data_old, data_new, y_old, y_new,
-  predict_function = predict, max_obs = 500, bins = 20,
+  predict_function = predict, max_obs = 100, bins = 20,
   scale = sd(y_new, na.rm = TRUE))
 }
 \arguments{
@@ -36,8 +36,8 @@ This function is executed for its side effects, all checks are being printed on 
 Currently three checks are implemented, covariate drift, residual drift and model drift.
 }
 \examples{
- library("DALEX2")
- \dontrun{
+ library("DALEX")
+ \donttest{
  library("ranger")
  predict_function <- function(m,x,...) predict(m, x, ...)$predictions
  model_old <- ranger(m2.price ~ ., data = apartments)

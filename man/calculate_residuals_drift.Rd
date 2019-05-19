@@ -29,8 +29,8 @@ an object of a class `covariate_drift` (data.frame) with Non-Intersection Distan
 Calculate Residual Drift for old model and new vs. old data
 }
 \examples{
- library("DALEX2")
- \dontrun{
+ library("DALEX")
+ \donttest{
  library("ranger")
  predict_function <- function(m,x,...) predict(m, x, ...)$predictions
  model_old <- ranger(m2.price ~ ., data = apartments)

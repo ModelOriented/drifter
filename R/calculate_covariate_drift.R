@@ -12,7 +12,7 @@
 #' @export
 #'
 #' @examples
-#' library("DALEX2")
+#' library("DALEX")
 #' # here we do not have any drift
 #' d <- calculate_covariate_drift(apartments, apartments_test)
 #' d
@@ -71,7 +71,7 @@ calculate_distance <- function(variable_old, variable_new, bins = 20) {
 #' @export
 #'
 #' @examples
-#' library("DALEX2")
+#' library("DALEX")
 #' # here we do not have any drift
 #' d <- calculate_covariate_drift(apartments, apartments_test)
 #' d

@@ -22,7 +22,7 @@ More formally, $$d(P,Q) = 1 - sum_i min(P_i, Q_i)$$.
 The larger the distance the more different are two distributions.
 }
 \examples{
-library("DALEX2")
+library("DALEX")
 # here we do not have any drift
 d <- calculate_covariate_drift(apartments, apartments_test)
 d

@@ -17,8 +17,8 @@
 #' @export
 #'
 #' @examples
-#'  library("DALEX2")
-#'  \dontrun{
+#'  library("DALEX")
+#'  \donttest{
 #'  library("ranger")
 #'  predict_function <- function(m,x,...) predict(m, x, ...)$predictions
 #'  model_old <- ranger(m2.price ~ ., data = apartments)
@@ -32,7 +32,7 @@ check_drift <- function(model_old, model_new,
                              data_old, data_new,
                              y_old, y_new,
                              predict_function = predict,
-                             max_obs = 500,
+                             max_obs = 100,
                              bins = 20,
                              scale = sd(y_new, na.rm = TRUE)) {
 

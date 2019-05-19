@@ -14,12 +14,13 @@
 #' @importFrom dplyr filter group_by summarise
 #' @importFrom tidyr spread
 #' @importFrom stats predict sd
-#' @importFrom ceterisParibus2 individual_variable_profile
+#' @importFrom ingredients partial_dependency
+#' @importFrom DALEX explain
 #' @export
 #'
 #' @examples
-#'  library("DALEX2")
-#'  \dontrun{
+#'  library("DALEX")
+#'  \donttest{
 #'  library("ranger")
 #'  predict_function <- function(m,x,...) predict(m, x, ...)$predictions
 #'  model_old <- ranger(m2.price ~ ., data = apartments)
@@ -27,7 +28,6 @@
 #'  calculate_model_drift(model_old, model_new,
 #'                   apartments_test,
 #'                   apartments_test$m2.price,
-#'                   max_obs = 1000,
 #'                   predict_function = predict_function)
 #'
 #'  # here we compare model created on male data
@@ -41,50 +41,48 @@
 #'  calculate_model_drift(model_old, model_new,
 #'                   HR_test,
 #'                   HR_test$status == "fired",
-#'                   max_obs = 1000,
 #'                   predict_function = predict_function)
 #'
 #'  # plot it
-#'  library("ceterisParibus2")
-#'  prof_old <- individual_variable_profile(model_old,
-#'                                      data = data_new,
-#'                                      new_observation = data_new[1:1000,],
+#'  library("ingredients")
+#'  prof_old <- partial_dependency(model_old,
+#'                                      data = data_new[1:500,],
 #'                                      label = "model_old",
-#'                                      predict_function = predict_function)
-#'  prof_new <- individual_variable_profile(model_new,
-#'                                      data = data_new,
-#'                                      new_observation = data_new[1:1000,],
+#'                                      predict_function = predict_function,
+#'                                      grid_points = 101,
+#'                                      variable_splits = NULL)
+#'  prof_new <- partial_dependency(model_new,
+#'                                      data = data_new[1:500,],
 #'                                      label = "model_new",
-#'                                      predict_function = predict_function)
-#'  plot(prof_old, prof_new,
-#'       selected_variables = "age", aggregate_profiles = mean,
-#'       show_observations = FALSE, color = "_label_")
+#'                                      predict_function = predict_function,
+#'                                      grid_points = 101,
+#'                                      variable_splits = NULL)
+#'  plot(prof_old, prof_new, color = "_label_")
 #' }
 #'
 calculate_model_drift <- function(model_old, model_new,
                                   data_new,
                                   y_new,
                                   predict_function = predict,
-                                  max_obs = -1,
+                                  max_obs = 100,
                                   scale = sd(y_new, na.rm = TRUE)) {
   #
   # test of model structure
-  if (max_obs > 0) {
-    data_new_small <- data_new[sample(1:nrow(data_new), max_obs),]
-  } else {
-    data_new_small <- data_new
+  if (max_obs <= 0) {
+    max_obs = nrow(data_new)
   }
 
-  prof_old <- individual_variable_profile(model_old,
-                                          data = data_new,
-                                          new_observation = data_new_small,
-                                          label = "model_old",
-                                          predict_function = predict_function)
-  prof_new <- individual_variable_profile(model_new,
-                                          data = data_new,
-                                          new_observation = data_new_small,
-                                          label = "model_new",
-                                          predict_function = predict_function)
+  explainer_old <- explain(model_old,
+                           data = data_new,
+                           label = "model_old",
+                           predict_function = predict_function)
+  explainer_new <- explain(model_old,
+                           data = data_new,
+                           label = "model_new",
+                           predict_function = predict_function)
+
+  prof_old <- partial_dependency(explainer_old, N = max_obs)
+  prof_new <- partial_dependency(explainer_new, N = max_obs)
   # for all variables
   vars <- as.character(unique(prof_old$`_vname_`))
 
@@ -109,8 +107,8 @@ calculate_model_drift <- function(model_old, model_new,
 #' @export
 #'
 #' @examples
-#'  library("DALEX2")
-#'  \dontrun{
+#'  library("DALEX")
+#'  \donttest{
 #'  library("ranger")
 #'  predict_function <- function(m,x,...) predict(m, x, ...)$predictions
 #'  model_old <- ranger(m2.price ~ ., data = apartments)
@@ -162,8 +160,8 @@ compare_two_profiles <- function(cpprofile_old, cpprofile_new, variables, scale 
     var <- variables[i]
     selected_var_old <- filter(cpprofile_old, `_vname_` == var)
     selected_var_new <- filter(cpprofile_new, `_vname_` == var)
-    selected_var_old <- selected_var_old[,c(var, "_yhat_", "_label_")]
-    selected_var_new <- selected_var_new[,c(var, "_yhat_", "_label_")]
+    selected_var_old <- selected_var_old[,c("_x_", "_yhat_", "_label_")]
+    selected_var_new <- selected_var_new[,c("_x_", "_yhat_", "_label_")]
     selected_var <- rbind(selected_var_old, selected_var_new)
     colnames(selected_var)[1] <- "x"
 
@@ -190,8 +188,8 @@ compare_two_profiles <- function(cpprofile_old, cpprofile_new, variables, scale 
 #' @export
 #'
 #' @examples
-#'  library("DALEX2")
-#'  \dontrun{
+#'  library("DALEX")
+#'  \donttest{
 #'  library("ranger")
 #'  predict_function <- function(m,x,...) predict(m, x, ...)$predictions
 #'  model_old <- ranger(m2.price ~ ., data = apartments)
@@ -199,7 +197,6 @@ compare_two_profiles <- function(cpprofile_old, cpprofile_new, variables, scale 
 #'  calculate_model_drift(model_old, model_new,
 #'                   apartments_test,
 #'                   apartments_test$m2.price,
-#'                   max_obs = 1000,
 #'                   predict_function = predict_function)
 #'
 #'  # here we compare model created on male data
@@ -213,24 +210,23 @@ compare_two_profiles <- function(cpprofile_old, cpprofile_new, variables, scale 
 #'  calculate_model_drift(model_old, model_new,
 #'                   HR_test,
 #'                   HR_test$status == "fired",
-#'                   max_obs = 1000,
 #'                   predict_function = predict_function)
 #'
 #'  # plot it
-#'  library("ceterisParibus2")
-#'  prof_old <- individual_variable_profile(model_old,
-#'                                      data = data_new,
-#'                                      new_observation = data_new[1:1000,],
+#'  library("ingredients")
+#'  prof_old <- partial_dependency(model_old,
+#'                                      data = data_new[1:1000,],
 #'                                      label = "model_old",
-#'                                      predict_function = predict_function)
-#'  prof_new <- individual_variable_profile(model_new,
-#'                                      data = data_new,
-#'                                      new_observation = data_new[1:1000,],
+#'                                      predict_function = predict_function,
+#'                                      grid_points = 101,
+#'                                      variable_splits = NULL)
+#'  prof_new <- partial_dependency(model_new,
+#'                                      data = data_new[1:1000,],
 #'                                      label = "model_new",
-#'                                      predict_function = predict_function)
-#'  plot(prof_old, prof_new,
-#'       selected_variables = "age", aggregate_profiles = mean,
-#'       show_observations = FALSE, color = "_label_")
+#'                                      predict_function = predict_function,
+#'                                      grid_points = 101,
+#'                                      variable_splits = NULL)
+#'  plot(prof_old, prof_new, color = "_label_")
 #'
 #' }
 #'

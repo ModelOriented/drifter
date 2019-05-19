@@ -20,7 +20,7 @@ this function prints a data frame with a nicer format
 Print Covariate Drift Data Frame
 }
 \examples{
-library("DALEX2")
+library("DALEX")
 # here we do not have any drift
 d <- calculate_covariate_drift(apartments, apartments_test)
 d
