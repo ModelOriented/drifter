@@ -1,5 +1,5 @@
 library(testthat)
-library(DALEX2)
+library(DALEX)
 library(drifter)
 
 test_check("drifter")

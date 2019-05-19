@@ -1,7 +1,7 @@
 context("Check check_drift() function")
 
 test_that("Length of all checks",{
-  library("DALEX2")
+  library("DALEX")
   library("ranger")
   predict_function <- function(m,x,...) predict(m, x, ...)$predictions
   model_old <- ranger(m2.price ~ ., data = apartments)
