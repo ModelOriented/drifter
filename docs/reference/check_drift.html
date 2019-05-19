@@ -31,6 +31,15 @@
 <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
 <![endif]-->
 
+<!-- Google analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-5650686-14"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-5650686-14');
+</script>
 
   </head>
 
@@ -45,8 +54,8 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-	  <a class = "navbar-mi2logo" href="http://mi2.mini.pw.edu.pl/">
-        <img src = "https://github.com/mi2-warsaw/MI2template/blob/master/inst/pkgdown/assets/MI2logo.jpg?raw=true" alt = "MI2" height = 46 title = "MI2">
+	  <a class = "navbar-mi2logo" href="http://DrWhy.AI/">
+        <img src = "https://github.com/ModelOriented/DrWhyTemplate/blob/master/inst/pkgdown/assets/drwhy_znak_violet_small.jpg?raw=true" alt = "MI2" height = 46 title = "MI2">
 	  </a>
       <a class="navbar-brand navbar-mi2" href="../index.html">This function executes all tests for drift between two datasets / models</a>
     </div>
@@ -87,7 +96,7 @@
     
 
     <pre class="usage"><span class='fu'>check_drift</span>(<span class='no'>model_old</span>, <span class='no'>model_new</span>, <span class='no'>data_old</span>, <span class='no'>data_new</span>, <span class='no'>y_old</span>, <span class='no'>y_new</span>,
-  <span class='kw'>predict_function</span> <span class='kw'>=</span> <span class='no'>predict</span>, <span class='kw'>max_obs</span> <span class='kw'>=</span> <span class='fl'>500</span>, <span class='kw'>bins</span> <span class='kw'>=</span> <span class='fl'>20</span>,
+  <span class='kw'>predict_function</span> <span class='kw'>=</span> <span class='no'>predict</span>, <span class='kw'>max_obs</span> <span class='kw'>=</span> <span class='fl'>100</span>, <span class='kw'>bins</span> <span class='kw'>=</span> <span class='fl'>20</span>,
   <span class='kw'>scale</span> <span class='kw'>=</span> <span class='fu'>sd</span>(<span class='no'>y_new</span>, <span class='kw'>na.rm</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>))</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
@@ -141,7 +150,7 @@
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'> <span class='fu'>library</span>(<span class='st'>"DALEX2"</span>)</div><div class='input'> <span class='fu'>library</span>(<span class='st'>"ranger"</span>)
+    <pre class="examples"><div class='input'> <span class='fu'>library</span>(<span class='st'>"DALEX"</span>)</div><div class='input'> <span class='fu'>library</span>(<span class='st'>"ranger"</span>)
  <span class='no'>predict_function</span> <span class='kw'>&lt;-</span> <span class='kw'>function</span>(<span class='no'>m</span>,<span class='no'>x</span>,<span class='no'>...</span>) <span class='fu'>predict</span>(<span class='no'>m</span>, <span class='no'>x</span>, <span class='no'>...</span>)$<span class='no'>predictions</span>
  <span class='no'>model_old</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='http://www.rdocumentation.org/packages/ranger/topics/ranger'>ranger</a></span>(<span class='no'>m2.price</span> ~ <span class='no'>.</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>apartments</span>)
  <span class='no'>model_new</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='http://www.rdocumentation.org/packages/ranger/topics/ranger'>ranger</a></span>(<span class='no'>m2.price</span> ~ <span class='no'>.</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>apartments_test</span>)
@@ -160,16 +169,15 @@
 #&gt;    -------------------------------------
 #&gt;                   Variable  Shift
 #&gt;   -------------------------------------
-#&gt;                  Residuals   34.1  **
+#&gt;                  Residuals   34.7  **
 #&gt;    -----------------------------------------------
 #&gt;                   Variable    Shift  Scaled
 #&gt;   -----------------------------------------------
-#&gt;                   m2.price     0.26     0.0  
-#&gt;          construction.year    72.83     8.1  
-#&gt;                    surface    26.53     2.9  
-#&gt;                      floor    37.54     4.2  
-#&gt;                   no.rooms    10.21     1.1  
-#&gt;                   district   152.72    17.0  .</div></pre>
+#&gt;                      floor    75.69     8.4  
+#&gt;                   no.rooms   107.66    12.0  .
+#&gt;                    surface    86.66     9.6  
+#&gt;                   m2.price   126.46    14.0  .
+#&gt;          construction.year   132.76    14.7  .</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>

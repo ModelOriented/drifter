@@ -31,6 +31,15 @@
 <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
 <![endif]-->
 
+<!-- Google analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-5650686-14"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-5650686-14');
+</script>
 
   </head>
 
@@ -45,8 +54,8 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-	  <a class = "navbar-mi2logo" href="http://mi2.mini.pw.edu.pl/">
-        <img src = "https://github.com/mi2-warsaw/MI2template/blob/master/inst/pkgdown/assets/MI2logo.jpg?raw=true" alt = "MI2" height = 46 title = "MI2">
+	  <a class = "navbar-mi2logo" href="http://DrWhy.AI/">
+        <img src = "https://github.com/ModelOriented/DrWhyTemplate/blob/master/inst/pkgdown/assets/drwhy_znak_violet_small.jpg?raw=true" alt = "MI2" height = 46 title = "MI2">
 	  </a>
       <a class="navbar-brand navbar-mi2" href="../index.html">Calculate Residual Drift for old model and new vs. old data</a>
     </div>
@@ -128,7 +137,7 @@
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'> <span class='fu'>library</span>(<span class='st'>"DALEX2"</span>)</div><div class='input'> <span class='fu'>library</span>(<span class='st'>"ranger"</span>)
+    <pre class="examples"><div class='input'> <span class='fu'>library</span>(<span class='st'>"DALEX"</span>)</div><div class='input'> <span class='fu'>library</span>(<span class='st'>"ranger"</span>)
  <span class='no'>predict_function</span> <span class='kw'>&lt;-</span> <span class='kw'>function</span>(<span class='no'>m</span>,<span class='no'>x</span>,<span class='no'>...</span>) <span class='fu'>predict</span>(<span class='no'>m</span>, <span class='no'>x</span>, <span class='no'>...</span>)$<span class='no'>predictions</span>
  <span class='no'>model_old</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='http://www.rdocumentation.org/packages/ranger/topics/ranger'>ranger</a></span>(<span class='no'>m2.price</span> ~ <span class='no'>.</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>apartments</span>)
  <span class='fu'>calculate_residuals_drift</span>(<span class='no'>model_old</span>,
@@ -136,12 +145,12 @@
                        <span class='no'>apartments_test</span>$<span class='no'>m2.price</span>[<span class='fl'>1</span>:<span class='fl'>4000</span>], <span class='no'>apartments_test</span>$<span class='no'>m2.price</span>[<span class='fl'>4001</span>:<span class='fl'>8000</span>],
                        <span class='kw'>predict_function</span> <span class='kw'>=</span> <span class='no'>predict_function</span>)</div><div class='output co'>#&gt;                   Variable  Shift
 #&gt;   -------------------------------------
-#&gt;                  Residuals    3.0  </div><div class='input'> <span class='fu'>calculate_residuals_drift</span>(<span class='no'>model_old</span>,
+#&gt;                  Residuals    3.7  </div><div class='input'> <span class='fu'>calculate_residuals_drift</span>(<span class='no'>model_old</span>,
                        <span class='no'>apartments</span>, <span class='no'>apartments_test</span>,
                        <span class='no'>apartments</span>$<span class='no'>m2.price</span>, <span class='no'>apartments_test</span>$<span class='no'>m2.price</span>,
                        <span class='kw'>predict_function</span> <span class='kw'>=</span> <span class='no'>predict_function</span>)</div><div class='output co'>#&gt;                   Variable  Shift
 #&gt;   -------------------------------------
-#&gt;                  Residuals   34.1  **</div><div class='input'>
+#&gt;                  Residuals   34.0  **</div><div class='input'>
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">

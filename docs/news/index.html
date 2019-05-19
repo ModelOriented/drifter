@@ -31,6 +31,15 @@
 <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
 <![endif]-->
 
+<!-- Google analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-5650686-14"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-5650686-14');
+</script>
 
   </head>
 
@@ -45,8 +54,8 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-	  <a class = "navbar-mi2logo" href="http://mi2.mini.pw.edu.pl/">
-        <img src = "https://github.com/mi2-warsaw/MI2template/blob/master/inst/pkgdown/assets/MI2logo.jpg?raw=true" alt = "MI2" height = 46 title = "MI2">
+	  <a class = "navbar-mi2logo" href="http://DrWhy.AI/">
+        <img src = "https://github.com/ModelOriented/DrWhyTemplate/blob/master/inst/pkgdown/assets/drwhy_znak_violet_small.jpg?raw=true" alt = "MI2" height = 46 title = "MI2">
 	  </a>
       <a class="navbar-brand navbar-mi2" href="../index.html"></a>
     </div>
@@ -84,6 +93,18 @@
     </div>
 
     <div class="contents">
+    <div id="drifter-0-2" class="section level2">
+<h2 class="hasAnchor">
+<a href="#drifter-0-2" class="anchor"></a>drifter 0.2</h2>
+<ul>
+<li>
+<code>DALEX2</code> is replaced by <code>DALEX</code>
+</li>
+<li>
+<code>ceterisParibus2</code> is replaced by <code>ingredients</code>
+</li>
+</ul>
+</div>
     <div id="drifter-0-1" class="section level2">
 <h2 class="hasAnchor">
 <a href="#drifter-0-1" class="anchor"></a>drifter 0.1</h2>
@@ -94,6 +115,8 @@
 <code><a href="../reference/calculate_residuals_drift.html">calculate_residuals_drift()</a></code> calculates 1d inverse intersection distances between two residuals calculated on old and new data</li>
 <li>
 <code><a href="../reference/calculate_model_drift.html">calculate_model_drift()</a></code> calculates distances between PDP curves calculated for new and old model</li>
+<li>
+<code>check_drif()</code> executes all tests for drift</li>
 </ul>
 </div>
     </div>
@@ -103,6 +126,7 @@
     <div id="tocnav">
       <h2>Contents</h2>
       <ul class="nav nav-pills nav-stacked contents-mi2">
+        <li><a href="#drifter-0-2">0.2</a></li>
         <li><a href="#drifter-0-1">0.1</a></li>
       </ul>
     </div>
