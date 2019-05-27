@@ -18,6 +18,11 @@
 #'
 #' @examples
 #'  library("DALEX")
+#'  model_old <- lm(m2.price ~ ., data = apartments)
+#'  model_new <- lm(m2.price ~ ., data = apartments_test[1:1000,])
+#'  check_drift(model_old, model_new,
+#'                   apartments, apartments_test,
+#'                   apartments$m2.price, apartments_test$m2.price)
 #'  \donttest{
 #'  library("ranger")
 #'  predict_function <- function(m,x,...) predict(m, x, ...)$predictions
@@ -38,8 +43,6 @@ check_drift <- function(model_old, model_new,
 
   # check covariate drift
   dc <- calculate_covariate_drift(data_old, data_new, bins = bins)
-  cat("   -------------------------------------\n")
-  print(dc)
 
   # check residual drift
   dr <- calculate_residuals_drift(model_old,
@@ -47,8 +50,6 @@ check_drift <- function(model_old, model_new,
                             y_old, y_new,
                             predict_function = predict_function,
                             bins = bins)
-  cat("   -------------------------------------\n")
-  print(dr)
 
   # check model drift
   dm <- calculate_model_drift(model_old, model_new,
@@ -57,10 +58,54 @@ check_drift <- function(model_old, model_new,
                         predict_function = predict_function,
                         max_obs = max_obs,
                         scale = scale)
-  cat("   -----------------------------------------------\n")
-  print(dm)
-  invisible(list(covariate_drift = dc,
+
+  result <- list(covariate_drift = dc,
                  residual_drift = dr,
-                 model_drift = dm))
+                 model_drift = dm)
+  class(result) = "all_drifter_checks"
+  result
 }
+
+
+#' Print All Drifter Checks
+#'
+#' @param x an object of the class `all_drifter_checks`
+#' @param ... other arguments, currently ignored
+#'
+#' @return this function prints all drifter checks
+#' @export
+#'
+#' @examples
+#'  library("DALEX")
+#'  model_old <- lm(m2.price ~ ., data = apartments)
+#'  model_new <- lm(m2.price ~ ., data = apartments_test[1:1000,])
+#'  check_drift(model_old, model_new,
+#'                   apartments, apartments_test,
+#'                   apartments$m2.price, apartments_test$m2.price)
+#'  \donttest{
+#'  library("ranger")
+#'  predict_function <- function(m,x,...) predict(m, x, ...)$predictions
+#'  model_old <- ranger(m2.price ~ ., data = apartments)
+#'  model_new <- ranger(m2.price ~ ., data = apartments_test)
+#'  check_drift(model_old, model_new,
+#'                   apartments, apartments_test,
+#'                   apartments$m2.price, apartments_test$m2.price,
+#'                   predict_function = predict_function)
+#' }
+print.all_drifter_checks <- function(x, ...) {
+  # check covariate drift
+  cat("   -------------------------------------\n")
+  print(x$dc)
+
+  # check residual drift
+  cat("   -------------------------------------\n")
+  print(x$dr)
+
+  # check model drift
+  cat("   -----------------------------------------------\n")
+  print(x$dm)
+
+  invisible(x)
+}
+
 

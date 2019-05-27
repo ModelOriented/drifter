@@ -1,15 +1,15 @@
 Package: drifter
 Title: Concept Drift and Concept Shift Detection for Predictive Models
-Version: 0.2
+Version: 0.2.1
 Authors@R: person("Przemyslaw", "Biecek", email = "przemyslaw.biecek@gmail.com", role = c("aut", "cre"))
 Description: Concept drift refers to the change in the data distribution or 
   in the relationships between variables over time.
   'drifter' calculates distances between variable distributions or 
   variable relations and identifies both types of drift. 
   Key functions are: 
-  calculate_covariate_drift() checks distance between corresponding varibles in two datasets,
-  calculate_residuals_drift() checks distance between residual distributionsfor two models,
-  calculate_model_drift() checks distance between PDP profiles for two models,
+  calculate_covariate_drift() checks distance between corresponding variables in two datasets,
+  calculate_residuals_drift() checks distance between residual distributions for two models,
+  calculate_model_drift() checks distance between partial dependency profiles for two models,
   check_drift() executes all checks against drift.
   'drifter' is a part of the 'DrWhy.AI' universe (Biecek 2018) <arXiv:1806.08915>.
 Depends: R (>= 3.1)

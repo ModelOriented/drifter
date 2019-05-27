@@ -37,6 +37,11 @@ Currently three checks are implemented, covariate drift, residual drift and mode
 }
 \examples{
  library("DALEX")
+ model_old <- lm(m2.price ~ ., data = apartments)
+ model_new <- lm(m2.price ~ ., data = apartments_test[1:1000,])
+ check_drift(model_old, model_new,
+                  apartments, apartments_test,
+                  apartments$m2.price, apartments_test$m2.price)
  \donttest{
  library("ranger")
  predict_function <- function(m,x,...) predict(m, x, ...)$predictions

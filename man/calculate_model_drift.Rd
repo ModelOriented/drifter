@@ -31,6 +31,12 @@ This function calculates differences between PDP curves calculated for new/old m
 }
 \examples{
  library("DALEX")
+ model_old <- lm(m2.price ~ ., data = apartments)
+ model_new <- lm(m2.price ~ ., data = apartments_test[1:1000,])
+ calculate_model_drift(model_old, model_new,
+                  apartments_test[1:1000,],
+                  apartments_test[1:1000,]$m2.price)
+
  \donttest{
  library("ranger")
  predict_function <- function(m,x,...) predict(m, x, ...)$predictions

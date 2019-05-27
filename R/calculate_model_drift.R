@@ -20,6 +20,12 @@
 #'
 #' @examples
 #'  library("DALEX")
+#'  model_old <- lm(m2.price ~ ., data = apartments)
+#'  model_new <- lm(m2.price ~ ., data = apartments_test[1:1000,])
+#'  calculate_model_drift(model_old, model_new,
+#'                   apartments_test[1:1000,],
+#'                   apartments_test[1:1000,]$m2.price)
+#'
 #'  \donttest{
 #'  library("ranger")
 #'  predict_function <- function(m,x,...) predict(m, x, ...)$predictions
@@ -108,6 +114,11 @@ calculate_model_drift <- function(model_old, model_new,
 #'
 #' @examples
 #'  library("DALEX")
+#'  model_old <- lm(m2.price ~ ., data = apartments)
+#'  model_new <- lm(m2.price ~ ., data = apartments_test[1:1000,])
+#'  calculate_model_drift(model_old, model_new,
+#'                   apartments_test[1:1000,],
+#'                   apartments_test[1:1000,]$m2.price)
 #'  \donttest{
 #'  library("ranger")
 #'  predict_function <- function(m,x,...) predict(m, x, ...)$predictions
@@ -189,6 +200,11 @@ compare_two_profiles <- function(cpprofile_old, cpprofile_new, variables, scale 
 #'
 #' @examples
 #'  library("DALEX")
+#'  model_old <- lm(m2.price ~ ., data = apartments)
+#'  model_new <- lm(m2.price ~ ., data = apartments_test[1:1000,])
+#'  calculate_model_drift(model_old, model_new,
+#'                   apartments_test[1:1000,],
+#'                   apartments_test[1:1000,]$m2.price)
 #'  \donttest{
 #'  library("ranger")
 #'  predict_function <- function(m,x,...) predict(m, x, ...)$predictions
