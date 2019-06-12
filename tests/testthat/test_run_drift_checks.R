@@ -12,4 +12,5 @@ test_that("Length of all checks",{
                    predict_function = predict_function)
 
   expect_true(length(res) == 3)
+  expect_output(print(res), "m2.price")
 })

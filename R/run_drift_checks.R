@@ -95,15 +95,15 @@ check_drift <- function(model_old, model_new,
 print.all_drifter_checks <- function(x, ...) {
   # check covariate drift
   cat("   -------------------------------------\n")
-  print(x$dc)
+  print(x$covariate_drift)
 
   # check residual drift
   cat("   -------------------------------------\n")
-  print(x$dr)
+  print(x$residual_drift)
 
   # check model drift
   cat("   -----------------------------------------------\n")
-  print(x$dm)
+  print(x$model_drift)
 
   invisible(x)
 }
