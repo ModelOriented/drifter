@@ -82,7 +82,7 @@ calculate_model_drift <- function(model_old, model_new,
                            data = data_new,
                            label = "model_old",
                            predict_function = predict_function)
-  explainer_new <- explain(model_old,
+  explainer_new <- explain(model_new,
                            data = data_new,
                            label = "model_new",
                            predict_function = predict_function)
