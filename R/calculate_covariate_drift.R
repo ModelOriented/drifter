@@ -51,8 +51,7 @@ calculate_covariate_drift <- function(data_old, data_new, bins = 20) {
 #' calculate_distance(rnorm(1000), runif(1000))
 calculate_distance <- function(variable_old, variable_new, bins = 20) {
   if ("factor" %in% class(variable_old)) {
-    #after_cuts <- c(variable_old, variable_new)
-    after_cuts <- as.factor(c(as.character(variable_old),as.character(variable_new)))
+    after_cuts <- c(variable_old, variable_new)
   } else {
     after_cuts <- cut(rank(c(variable_old, variable_new)), bins)
   }
