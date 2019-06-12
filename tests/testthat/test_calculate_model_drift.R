@@ -13,4 +13,6 @@ test_that("Type of data in the explainer",{
                      predict_function = predict_function)
   expect_true("model_drift" %in% class(d))
   expect_true(all(dim(d) == c(5,3)))
+  expect_true(all(d[,2] >= 0))
+  expect_output(print(d), "m2.price")
 })

@@ -12,4 +12,6 @@ test_that("Type of data in the explainer",{
 
   expect_true("covariate_drift" %in% class(d))
   expect_true(all(dim(d) == c(1,2)))
+  expect_true(d[,2] <= 1)
+  expect_true(d[,2] >= 0)
 })
