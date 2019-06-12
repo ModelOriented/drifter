@@ -1,3 +1,7 @@
+drifter 0.2.2
+----------------------------------------------------------------
+* fixed bug in `calculate_model_drift`
+
 drifter 0.2.1
 ----------------------------------------------------------------
 * tiny corrections requested by CRAN

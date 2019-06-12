@@ -128,11 +128,11 @@
                   <span class='no'>apartments_test</span>[<span class='fl'>1</span>:<span class='fl'>1000</span>,],
                   <span class='no'>apartments_test</span>[<span class='fl'>1</span>:<span class='fl'>1000</span>,]$<span class='no'>m2.price</span>)</div><div class='output co'>#&gt;                   Variable    Shift  Scaled
 #&gt;   -----------------------------------------------
-#&gt;                      floor   169.20    18.9  .
-#&gt;                   no.rooms   166.08    18.6  .
-#&gt;                    surface   161.17    18.0  .
-#&gt;                   m2.price   167.21    18.7  .
-#&gt;          construction.year   167.44    18.7  .</div><div class='input'> </div><div class='input'> <span class='fu'>library</span>(<span class='st'>"ranger"</span>)
+#&gt;                      floor   170.48    19.1  .
+#&gt;                   no.rooms   168.87    18.9  .
+#&gt;                    surface   162.15    18.2  .
+#&gt;                   m2.price   169.04    18.9  .
+#&gt;          construction.year   168.95    18.9  .</div><div class='input'> </div><div class='input'> <span class='fu'>library</span>(<span class='st'>"ranger"</span>)
  <span class='no'>predict_function</span> <span class='kw'>&lt;-</span> <span class='kw'>function</span>(<span class='no'>m</span>,<span class='no'>x</span>,<span class='no'>...</span>) <span class='fu'>predict</span>(<span class='no'>m</span>, <span class='no'>x</span>, <span class='no'>...</span>)$<span class='no'>predictions</span>
  <span class='no'>model_old</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='http://www.rdocumentation.org/packages/ranger/topics/ranger'>ranger</a></span>(<span class='no'>m2.price</span> ~ <span class='no'>.</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>apartments</span>)
  <span class='no'>model_new</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='http://www.rdocumentation.org/packages/ranger/topics/ranger'>ranger</a></span>(<span class='no'>m2.price</span> ~ <span class='no'>.</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>apartments_test</span>)
@@ -141,11 +141,11 @@
                   <span class='no'>apartments_test</span>$<span class='no'>m2.price</span>,
                   <span class='kw'>predict_function</span> <span class='kw'>=</span> <span class='no'>predict_function</span>)</div><div class='output co'>#&gt;                   Variable    Shift  Scaled
 #&gt;   -----------------------------------------------
-#&gt;                      floor   104.71    11.6  .
-#&gt;                   no.rooms    63.93     7.1  
-#&gt;                    surface    40.08     4.5  
-#&gt;                   m2.price    77.95     8.7  
-#&gt;          construction.year    43.54     4.8  </div><div class='input'>
+#&gt;                      floor   112.89    12.5  .
+#&gt;                   no.rooms    61.11     6.8  
+#&gt;                    surface    41.19     4.6  
+#&gt;                   m2.price    72.49     8.1  
+#&gt;          construction.year    84.20     9.4  </div><div class='input'>
  <span class='co'># here we compare model created on male data</span>
  <span class='co'># with model applied to female data</span>
  <span class='co'># there is interaction with age, and it is detected here</span>
@@ -159,10 +159,10 @@
                   <span class='no'>HR_test</span>$<span class='no'>status</span> <span class='kw'>==</span> <span class='st'>"fired"</span>,
                   <span class='kw'>predict_function</span> <span class='kw'>=</span> <span class='no'>predict_function</span>)</div><div class='output co'>#&gt;                   Variable    Shift  Scaled
 #&gt;   -----------------------------------------------
-#&gt;                     salary     0.15    31.1  **
-#&gt;                 evaluation     0.10    21.8  *
-#&gt;                        age     0.10    20.4  *
-#&gt;                      hours     0.02     4.9  </div><div class='input'>
+#&gt;                     salary     0.11    22.2  *
+#&gt;                 evaluation     0.06    13.2  .
+#&gt;                        age     0.30    62.2  ***
+#&gt;                      hours     0.05    10.4  .</div><div class='input'>
  <span class='co'># plot it</span>
  <span class='fu'>library</span>(<span class='st'>"ingredients"</span>)
  <span class='no'>prof_old</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='http://www.rdocumentation.org/packages/ingredients/topics/partial_dependency'>partial_dependency</a></span>(<span class='no'>model_old</span>,

@@ -156,11 +156,26 @@
  <span class='fu'>check_drift</span>(<span class='no'>model_old</span>, <span class='no'>model_new</span>,
                   <span class='no'>apartments</span>, <span class='no'>apartments_test</span>,
                   <span class='no'>apartments</span>$<span class='no'>m2.price</span>, <span class='no'>apartments_test</span>$<span class='no'>m2.price</span>)</div><div class='output co'>#&gt;    -------------------------------------
-#&gt; NULL
+#&gt;                   Variable  Shift
+#&gt;   -------------------------------------
+#&gt;                   m2.price    4.9  
+#&gt;          construction.year    6.0  
+#&gt;                    surface    6.8  
+#&gt;                      floor    4.9  
+#&gt;                   no.rooms    2.8  
+#&gt;                   district    2.8  
 #&gt;    -------------------------------------
-#&gt; NULL
+#&gt;                   Variable  Shift
+#&gt;   -------------------------------------
+#&gt;                  Residuals    8.3  
 #&gt;    -----------------------------------------------
-#&gt; NULL</div><div class='input'> </div><div class='input'> <span class='fu'>library</span>(<span class='st'>"ranger"</span>)
+#&gt;                   Variable    Shift  Scaled
+#&gt;   -----------------------------------------------
+#&gt;                      floor    22.10     2.5  
+#&gt;                   no.rooms    27.44     3.0  
+#&gt;                    surface    30.12     3.3  
+#&gt;                   m2.price    26.41     2.9  
+#&gt;          construction.year    29.49     3.3  </div><div class='input'> </div><div class='input'> <span class='fu'>library</span>(<span class='st'>"ranger"</span>)
  <span class='no'>predict_function</span> <span class='kw'>&lt;-</span> <span class='kw'>function</span>(<span class='no'>m</span>,<span class='no'>x</span>,<span class='no'>...</span>) <span class='fu'>predict</span>(<span class='no'>m</span>, <span class='no'>x</span>, <span class='no'>...</span>)$<span class='no'>predictions</span>
  <span class='no'>model_old</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='http://www.rdocumentation.org/packages/ranger/topics/ranger'>ranger</a></span>(<span class='no'>m2.price</span> ~ <span class='no'>.</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>apartments</span>)
  <span class='no'>model_new</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='http://www.rdocumentation.org/packages/ranger/topics/ranger'>ranger</a></span>(<span class='no'>m2.price</span> ~ <span class='no'>.</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>apartments_test</span>)
@@ -168,11 +183,26 @@
                   <span class='no'>apartments</span>, <span class='no'>apartments_test</span>,
                   <span class='no'>apartments</span>$<span class='no'>m2.price</span>, <span class='no'>apartments_test</span>$<span class='no'>m2.price</span>,
                   <span class='kw'>predict_function</span> <span class='kw'>=</span> <span class='no'>predict_function</span>)</div><div class='output co'>#&gt;    -------------------------------------
-#&gt; NULL
+#&gt;                   Variable  Shift
+#&gt;   -------------------------------------
+#&gt;                   m2.price    4.9  
+#&gt;          construction.year    6.0  
+#&gt;                    surface    6.8  
+#&gt;                      floor    4.9  
+#&gt;                   no.rooms    2.8  
+#&gt;                   district    2.8  
 #&gt;    -------------------------------------
-#&gt; NULL
+#&gt;                   Variable  Shift
+#&gt;   -------------------------------------
+#&gt;                  Residuals   34.1  **
 #&gt;    -----------------------------------------------
-#&gt; NULL</div></pre>
+#&gt;                   Variable    Shift  Scaled
+#&gt;   -----------------------------------------------
+#&gt;                      floor    83.14     9.2  
+#&gt;                   no.rooms   160.79    17.9  .
+#&gt;                    surface   164.33    18.2  .
+#&gt;                   m2.price   166.15    18.5  .
+#&gt;          construction.year   201.95    22.4  *</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>

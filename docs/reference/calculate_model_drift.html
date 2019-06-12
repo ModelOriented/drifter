@@ -145,11 +145,11 @@
                   <span class='no'>apartments_test</span>[<span class='fl'>1</span>:<span class='fl'>1000</span>,],
                   <span class='no'>apartments_test</span>[<span class='fl'>1</span>:<span class='fl'>1000</span>,]$<span class='no'>m2.price</span>)</div><div class='output co'>#&gt;                   Variable    Shift  Scaled
 #&gt;   -----------------------------------------------
-#&gt;                      floor   134.91    15.1  .
-#&gt;                   no.rooms   147.81    16.6  .
-#&gt;                    surface   107.72    12.1  .
-#&gt;                   m2.price   150.82    16.9  .
-#&gt;          construction.year   149.39    16.7  .</div><div class='input'>
+#&gt;                      floor   138.34    15.5  .
+#&gt;                   no.rooms   151.07    16.9  .
+#&gt;                    surface   111.21    12.5  .
+#&gt;                   m2.price   153.56    17.2  .
+#&gt;          construction.year   154.71    17.3  .</div><div class='input'>
  </div><div class='input'> <span class='fu'>library</span>(<span class='st'>"ranger"</span>)
  <span class='no'>predict_function</span> <span class='kw'>&lt;-</span> <span class='kw'>function</span>(<span class='no'>m</span>,<span class='no'>x</span>,<span class='no'>...</span>) <span class='fu'>predict</span>(<span class='no'>m</span>, <span class='no'>x</span>, <span class='no'>...</span>)$<span class='no'>predictions</span>
  <span class='no'>model_old</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='http://www.rdocumentation.org/packages/ranger/topics/ranger'>ranger</a></span>(<span class='no'>m2.price</span> ~ <span class='no'>.</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>apartments</span>)
@@ -159,11 +159,11 @@
                   <span class='no'>apartments_test</span>$<span class='no'>m2.price</span>,
                   <span class='kw'>predict_function</span> <span class='kw'>=</span> <span class='no'>predict_function</span>)</div><div class='output co'>#&gt;                   Variable    Shift  Scaled
 #&gt;   -----------------------------------------------
-#&gt;                      floor    71.61     8.0  
-#&gt;                   no.rooms    31.16     3.5  
-#&gt;                    surface     9.34     1.0  
-#&gt;                   m2.price    59.35     6.6  
-#&gt;          construction.year    34.79     3.9  </div><div class='input'>
+#&gt;                      floor    87.95     9.8  
+#&gt;                   no.rooms    34.66     3.8  
+#&gt;                    surface    29.47     3.3  
+#&gt;                   m2.price    63.14     7.0  
+#&gt;          construction.year    76.80     8.5  </div><div class='input'>
  <span class='co'># here we compare model created on male data</span>
  <span class='co'># with model applied to female data</span>
  <span class='co'># there is interaction with age, and it is detected here</span>
@@ -177,17 +177,17 @@
                   <span class='no'>HR_test</span>$<span class='no'>status</span> <span class='kw'>==</span> <span class='st'>"fired"</span>,
                   <span class='kw'>predict_function</span> <span class='kw'>=</span> <span class='no'>predict_function</span>)</div><div class='output co'>#&gt;                   Variable    Shift  Scaled
 #&gt;   -----------------------------------------------
-#&gt;                     salary     0.01     1.9  
-#&gt;                 evaluation     0.03     6.1  
-#&gt;                        age     0.02     3.6  
-#&gt;                      hours     0.04     7.5  </div><div class='input'>
+#&gt;                     salary     0.03     6.6  
+#&gt;                 evaluation     0.04     8.1  
+#&gt;                        age     0.26    53.3  ***
+#&gt;                      hours     0.05     9.5  </div><div class='input'>
  <span class='co'># plot it</span>
  <span class='fu'>library</span>(<span class='st'>"ingredients"</span>)</div><div class='output co'>#&gt; <span class='message'></span>
-#&gt; <span class='message'>Attaching package: ‘ingredients’</span></div><div class='output co'>#&gt; <span class='message'>The following object is masked from ‘package:testthat’:</span>
+#&gt; <span class='message'>Attaching package: ‘ingredients’</span></div><div class='output co'>#&gt; <span class='message'>The following objects are masked from ‘package:DALEX’:</span>
 #&gt; <span class='message'></span>
-#&gt; <span class='message'>    describe</span></div><div class='output co'>#&gt; <span class='message'>The following objects are masked from ‘package:DALEX’:</span>
+#&gt; <span class='message'>    theme_drwhy, theme_drwhy_colors, theme_drwhy_vertical</span></div><div class='output co'>#&gt; <span class='message'>The following object is masked from ‘package:testthat’:</span>
 #&gt; <span class='message'></span>
-#&gt; <span class='message'>    theme_drwhy, theme_drwhy_colors, theme_drwhy_vertical</span></div><div class='input'> <span class='no'>prof_old</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='http://www.rdocumentation.org/packages/ingredients/topics/partial_dependency'>partial_dependency</a></span>(<span class='no'>model_old</span>,
+#&gt; <span class='message'>    describe</span></div><div class='input'> <span class='no'>prof_old</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='http://www.rdocumentation.org/packages/ingredients/topics/partial_dependency'>partial_dependency</a></span>(<span class='no'>model_old</span>,
                                      <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>data_new</span>[<span class='fl'>1</span>:<span class='fl'>500</span>,],
                                      <span class='kw'>label</span> <span class='kw'>=</span> <span class='st'>"model_old"</span>,
                                      <span class='kw'>predict_function</span> <span class='kw'>=</span> <span class='no'>predict_function</span>,

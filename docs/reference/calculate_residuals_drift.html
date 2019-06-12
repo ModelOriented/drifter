@@ -144,11 +144,11 @@
                   <span class='no'>apartments_test</span>[<span class='fl'>1</span>:<span class='fl'>1000</span>,],
                   <span class='no'>apartments_test</span>[<span class='fl'>1</span>:<span class='fl'>1000</span>,]$<span class='no'>m2.price</span>)</div><div class='output co'>#&gt;                   Variable    Shift  Scaled
 #&gt;   -----------------------------------------------
-#&gt;                      floor    21.84     2.4  
-#&gt;                   no.rooms    30.21     3.4  
-#&gt;                    surface    33.77     3.8  
-#&gt;                   m2.price    26.81     3.0  
-#&gt;          construction.year    26.57     3.0  </div><div class='input'> </div><div class='input'> <span class='fu'>library</span>(<span class='st'>"ranger"</span>)
+#&gt;                      floor    18.98     2.1  
+#&gt;                   no.rooms    27.33     3.1  
+#&gt;                    surface    37.96     4.3  
+#&gt;                   m2.price    23.35     2.6  
+#&gt;          construction.year    25.11     2.8  </div><div class='input'> </div><div class='input'> <span class='fu'>library</span>(<span class='st'>"ranger"</span>)
  <span class='no'>predict_function</span> <span class='kw'>&lt;-</span> <span class='kw'>function</span>(<span class='no'>m</span>,<span class='no'>x</span>,<span class='no'>...</span>) <span class='fu'>predict</span>(<span class='no'>m</span>, <span class='no'>x</span>, <span class='no'>...</span>)$<span class='no'>predictions</span>
  <span class='no'>model_old</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='http://www.rdocumentation.org/packages/ranger/topics/ranger'>ranger</a></span>(<span class='no'>m2.price</span> ~ <span class='no'>.</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>apartments</span>)
  <span class='fu'>calculate_residuals_drift</span>(<span class='no'>model_old</span>,
